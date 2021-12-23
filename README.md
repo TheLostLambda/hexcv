@@ -11,7 +11,7 @@ OpenCV is a little strange and requires arguments to be passed using `=`, like t
   - Meson (less abhorrent than Make or CMake)
   - OpenCV (most mature computer vision library around)
   - Clang (has better linting, formatting, and module support)
-  - LLD (because even linkers need to be specified...)
+  - Mold (because even linkers need to be specified...)
   - ccache (for some reason this isn't the default?)
 
 # Learning Resources
