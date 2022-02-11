@@ -18,6 +18,9 @@ OpenCV is a little strange and requires arguments to be passed using `=`, like t
 ## Learning Resources
   - [Meson Example](https://mesonbuild.com/GuiTutorial.html)
 
+### Shape Recognition
+  - [Contour Detection](https://learnopencv.com/contour-detection-using-opencv-python-c/)
+
 ### Character Recognition
   - [Rotation Invariant Pooling](https://stats.stackexchange.com/questions/239076/about-cnn-kernels-and-scale-rotation-invariance)
   - [CRAFT](https://arxiv.org/pdf/1904.01941.pdf)

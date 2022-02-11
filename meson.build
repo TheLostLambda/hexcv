@@ -9,3 +9,8 @@ executable('showcam', 'showcam.cpp',
 executable('east', 'east.cpp',
   dependencies : opencv,
   cpp_args : clang_args)
+
+
+executable('shape-rec', 'shape-rec.cpp',
+  dependencies : opencv,
+  cpp_args : clang_args)
