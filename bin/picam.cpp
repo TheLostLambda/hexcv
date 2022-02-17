@@ -1,9 +1,7 @@
 #include <chrono>
+#include <time.h>
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include <thread>
-#include <signal.h>
-#include <unistd.h>
 
 using namespace std;
 
@@ -15,23 +13,37 @@ int main(int, char **) {
     return 1;
   }
 
+  // create a window to display the images from the webcam
+  cv::namedWindow("PiCam", cv::WINDOW_GUI_NORMAL);
+  cv::setWindowProperty("PiCam", cv::WND_PROP_FULLSCREEN, cv::WINDOW_FULLSCREEN);
+
   // this will contain the image from the webcam
   cv::Mat frame;
+
+  // start a clock for tracking elapsed time
+  auto start = chrono::steady_clock::now();
 
   // display the frame until you press a key
   while (true) {
     // capture the next frame from the webcam
     camera >> frame;
     // show the image on the window
-    cv::imwrite("/tmp/frame.png", frame);
-    pid_t pid = fork();
-    if (pid == 0) {
-      execlp("fbi", "fbi", "-T", "3", "-noverbose", "/tmp/frame.png", NULL);
-    } else {
-      // wait a moment before looping again
-      this_thread::sleep_for(chrono::milliseconds(150));
-      kill(pid, SIGTERM);
+    cv::imshow("PiCam", frame);
+    // check how much time has passed
+    auto end = chrono::steady_clock::now();
+    // if two seconds have passed, save the current frame
+    if (chrono::duration_cast<chrono::seconds>(end - start).count() >= 2) {
+      // format the current system time in str
+      auto const time = chrono::system_clock::to_time_t(chrono::system_clock::now());
+      string strtime(ctime(&time));
+      strtime.pop_back();
+      // save the current frame
+      cv::imwrite("/tmp/" + strtime + ".png", frame);
+      start = end;
     }
+    // wait (1ms) for a key to be pressed
+    if (cv::waitKey(1) >= 0)
+      break;
   }
   return 0;
 }
